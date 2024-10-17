@@ -166,13 +166,12 @@
 // export default LoginPage;
 
 
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '/src/style/Login.css';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -190,9 +189,10 @@ const LoginPage = () => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', formData);
       const token = res.data.token;
-      
+
       if (token) {
         localStorage.setItem('token', token); // Store the token
+        onLogin(); // Call the onLogin function to update authentication state
         navigate('/home'); // Navigate to home page after login
       }
     } catch (err) {
@@ -230,3 +230,4 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
