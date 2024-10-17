@@ -1,0 +1,147 @@
+/* Global Styles */
+.page-container {
+  display: contents;
+  padding: 20;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(to right, #007aff, #00b3ff);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  
+  background-color: #fff;
+  color: #007aff;
+  width: 200px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #00b3ff;
+  color: white;
+}
+
+/* Market Section */
+.market-section {
+  margin: 40px 0;
+}
+
+.market-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.market-data {
+  display: flex;
+  justify-content: space-around;
+}
+
+.market-item {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.market-up {
+  color: green;
+}
+
+.market-down {
+  color: red;
+}
+
+/* Features Section */
+.features-section {
+  margin: 40px 0;
+}
+
+.features-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.features-grid {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feature-item {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+  text-align: center;
+}
+
+/* Newsletter Section */
+.newsletter-section {
+  background-color: #007aff;
+  color: white;
+  padding: 40px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.newsletter-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.newsletter-form {
+  width: 300px;
+  
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 300px;
+}
+
+.subscribe-button {
+  background-color: #fff;
+  color: #007aff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.subscribe-button:hover {
+  background-color: #00b3ff;
+  color: white;
+}
+.success-message {
+  color: rgb(227, 232, 227);
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+

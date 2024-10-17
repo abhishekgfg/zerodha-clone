@@ -1,0 +1,104 @@
+.footer {
+  background: linear-gradient(to right, #00264d, #003366);
+  padding: 40px 0;
+  color: white;
+  text-align: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  width: 30%;
+  margin-bottom: 10px;
+}
+.footer-link {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #00ccff;
+}
+
+.footer-contact {
+  margin-bottom: 20px;
+}
+.footer-contact h2 {
+  color:white; /* Replace #yourColor with the desired color code */
+}
+
+.footer-contact p {
+  display: flex;
+  align-items: center;
+}
+
+.footer-contact-link {
+  color: white;
+  margin-left: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-contact-link:hover {
+  color: #00ccff;
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-social-links {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-link {
+  margin: 0 10px;
+}
+
+.social-logo {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover .social-logo {
+  transform: scale(1.1);
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.back-to-footer-btn {
+  background-color: #00ccff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.back-to-footer-btn:hover {
+  background-color: #0099cc;
+}
