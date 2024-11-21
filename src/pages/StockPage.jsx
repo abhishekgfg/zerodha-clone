@@ -56,62 +56,96 @@ const stocksData = [
 ];
 
 const StockPage = () => {
-  const [selectedStocks, setSelectedStocks] = useState([]);
+  const [selectedStocks, setSelectedStocks] = useState({});
   const [message, setMessage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Handle multiple stock selection
-  const handleStockSelect = (stock) => {
-    if (!selectedStocks.includes(stock)) {
-      const newSelection = [...selectedStocks, stock];
-      setSelectedStocks(newSelection);
-      calculateTotalPrice(newSelection);
+  const handleStockSelect = (stock, quantity) => {
+    const updatedStocks = { ...selectedStocks };
+
+    if (quantity === 0) {
+      delete updatedStocks[stock.id]; // Remove stock if quantity is 0
     } else {
-      const newSelection = selectedStocks.filter((s) => s.id !== stock.id);
-      setSelectedStocks(newSelection);
-      calculateTotalPrice(newSelection);
+      updatedStocks[stock.id] = { ...stock, quantity };
     }
+
+    setSelectedStocks(updatedStocks);
+    calculateTotalPrice(updatedStocks);
   };
 
-  // Calculate the total price of selected stocks
   const calculateTotalPrice = (stocks) => {
-    const total = stocks.reduce((acc, stock) => acc + stock.price, 0);
+    const total = Object.values(stocks).reduce(
+      (acc, stock) => acc + stock.price * stock.quantity,
+      0
+    );
     setTotalPrice(total);
   };
 
-  // Handle adding to watchlist
   const handleAddToWatchlist = () => {
-    if (selectedStocks.length === 0) {
+    if (Object.keys(selectedStocks).length === 0) {
       setMessage('No stock selected.');
     } else {
-      setMessage(`${selectedStocks.map((s) => s.name).join(', ')} added to watchlist.`);
+      const stockNames = Object.values(selectedStocks)
+        .map((s) => `${s.name} (${s.quantity})`)
+        .join(', ');
+      setMessage(`${stockNames} added to watchlist.`);
     }
   };
 
-  // Handle buying stocks
   const handleBuyStock = () => {
-    if (selectedStocks.length === 0) {
+    if (Object.keys(selectedStocks).length === 0) {
       setMessage('No stock selected.');
     } else {
-      setMessage(`Successfully bought ${selectedStocks.map((s) => s.name).join(', ')}.`);
-      setSelectedStocks([]);
+      const stockNames = Object.values(selectedStocks)
+        .map((s) => `${s.name} (${s.quantity})`)
+        .join(', ');
+      setMessage(`Successfully bought ${stockNames}.`);
+      setSelectedStocks({});
       setTotalPrice(0);
     }
   };
+
+  const filteredStocks = stocksData.filter((stock) =>
+    stock.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="page-container">
       <h2>Stock Page</h2>
       <p>Select stocks to add to watchlist or buy.</p>
 
+      {/* Search Bar */}
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Search stocks..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        <button className="search-button">
+          <i className="fa fa-search"></i>
+        </button>
+      </div>
+
       <div className="stock-list">
-        {stocksData.map((stock) => (
-          <div key={stock.id} className={`stock-item ${selectedStocks.includes(stock) ? 'selected' : ''}`}>
+        {filteredStocks.map((stock) => (
+          <div key={stock.id} className="stock-item">
             <h3>{stock.name}</h3>
             <p>Price: ${stock.price}</p>
-            <button onClick={() => handleStockSelect(stock)}>
-              {selectedStocks.includes(stock) ? 'Deselect' : 'Select'}
-            </button>
+            <div className="quantity-selector">
+              <label htmlFor={`quantity-${stock.id}`}>Quantity:</label>
+              <input
+                id={`quantity-${stock.id}`}
+                type="number"
+                min="0"
+                value={selectedStocks[stock.id]?.quantity || 0}
+                onChange={(e) =>
+                  handleStockSelect(stock, parseInt(e.target.value) || 0)
+                }
+              />
+            </div>
           </div>
         ))}
       </div>

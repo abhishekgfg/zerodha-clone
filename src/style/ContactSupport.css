@@ -1,0 +1,130 @@
+.contact-support-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: center; /* Centered text */
+  }
+  
+  h2 {
+    color: #333; /* Dark text color */
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: #666; /* Slightly lighter text */
+    margin-bottom: 2rem;
+  }
+  
+  .support-form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 1rem; /* Space between elements */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align labels and inputs to the start */
+  }
+  
+  label {
+    margin-bottom: 0.5rem; /* Space between label and input */
+    font-weight: bold; /* Bold labels */
+  }
+  
+  input, textarea {
+    width: 100%; /* Full width inputs */
+    padding: 10px; /* Inner padding */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded edges */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+  }
+  
+  input:focus, textarea:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  textarea {
+    resize: none; /* Prevent resizing */
+    height: 100px; /* Fixed height */
+  }
+  
+  .submit-button {
+    padding: 10px 20px; /* Button padding */
+    background-color: #007bff; /* Primary color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background change */
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .thank-you-message {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: center; /* Centered text */
+  }
+  
+  .back-button {
+    padding: 20px 10px; /* Button padding */
+    background-color: #007bff; /* Primary color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background change */
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+
+  .dashboard-button {
+    padding: 10px 20px; /* Button padding */
+    background-color: #28a745; /* Success color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-left: 10px; /* Space between buttons */
+    transition: background-color 0.3s; /* Smooth background change */
+  }
+  
+  .dashboard-button:hover {
+    background-color: #218838; /* Darker shade on hover */
+  }
+  
+  .back-button {
+    padding: 10px 20px; /* Button padding */
+    background-color: #007bff; /* Primary color */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: 10px; /* Space above the button */
+    transition: background-color 0.3s; /* Smooth background change */
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  /* Additional styles for spacing between buttons */
+.button-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center buttons */
+    gap: 15px; /* Space between buttons */
+    margin-top: 20px; /* Space above the button container */
+  }
+  

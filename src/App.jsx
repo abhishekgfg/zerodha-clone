@@ -14,10 +14,16 @@ import About from '/src/FooterPage/About';
 import FAQ from '/src/FooterPage/FAQ';
 import Legal from '/src/FooterPage/Legal';
 import Support from '/src/FooterPage/Support';
+import ContactSupport from '/src/pages/ContactSupport';
+import MutualFunds from '/src/pages/MutualFunds';
+import IPOPage from '/src/pages/IPOPage';
+import AboutMutualFunds from '/src/pages/AboutMutualFunds';
 
 import '/src/style/App.css';
 
+
 const App = () => {
+  
   const footerRef = useRef(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -41,8 +47,15 @@ const App = () => {
     if (footerRef.current) {
       footerRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
-  };
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  }
+  };
+  
+  
   return (
     <Router>
       <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
@@ -53,6 +66,8 @@ const App = () => {
             isAuthenticated ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />
           }
         />
+       <Route path="/contact-support" element={<ContactSupport />} />
+
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/home" element={<PrivateRoute isAuthenticated={isAuthenticated}><HomePage /></PrivateRoute>} />
         <Route path="/stocks" element={<PrivateRoute isAuthenticated={isAuthenticated}><StockPage /></PrivateRoute>} />
@@ -64,6 +79,9 @@ const App = () => {
         <Route path="/faq" element={<FAQ scrollToFooterInstantly={scrollToFooterInstantly} />} />
         <Route path="/legal" element={<Legal scrollToFooterInstantly={scrollToFooterInstantly} />} />
         <Route path="/support" element={<Support scrollToFooterInstantly={scrollToFooterInstantly} />} />
+        <Route path="/ipo" element={<IPOPage />} />
+        <Route path="/mutual-funds" element={<MutualFunds />} />
+        <Route path="/about-mutual-funds" element={<AboutMutualFunds />} />
       </Routes>
       <Footer ref={footerRef} />
     </Router>

@@ -1,0 +1,146 @@
+.mutual-funds-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .funds-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .fund-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 15px;
+    width: 250px;
+    text-align: left;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .fund-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fund-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .risk {
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .high {
+    background-color: #e57373;
+  }
+  
+  .moderate {
+    background-color: #ffb74d;
+  }
+  
+  .low {
+    background-color: #81c784;
+  }
+  
+  .invest-now {
+    text-align: center;
+    margin-top: 15px;
+    color: #4285f4;
+    font-weight: bold;
+  }
+  
+  .fund-details-modal {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    text-align: left;
+  }
+  
+  .invest-button, .close-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .invest-button {
+    background-color: #66bb6a;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .invest-button:hover {
+    background-color: #43a047;
+  }
+  
+  .close-button {
+    background-color: #ff7043;
+    color: white;
+  }
+  
+  .close-button:hover {
+    background-color: #f4511e;
+  }
+  
+
+  .unit-selection {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .unit-selection input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .investment-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #66bb6a;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  
+  .learn-button {
+    padding: 10px 15px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 0; /* Add margin for spacing */
+  }
+  
+  .learn-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  

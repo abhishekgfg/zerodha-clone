@@ -1,0 +1,68 @@
+/* src/style/AboutMutualFunds.css */
+
+.about-mutual-funds-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .back-button {
+    padding: 10px 15px;
+    background-color: #007BFF; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* Space above the button */
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+
+
+
+  .about-mutual-funds-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  
+  .back-button,
+  .learn-more-button {
+    background-color: #007BFF; /* Change this color as desired */
+    color: white;
+    border: none; /* Remove border */
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Include box-shadow in the transition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Initial shadow effect */
+  }
+  
+  .back-button:hover,
+  .learn-more-button:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+    transform: scale(1.05); /* Scale effect */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+  }
+  
+  .learn-more-button {
+    background-color: #28a745; /* Green color */
+  }
+  
+  .learn-more-button:hover {
+    background-color: #218838; /* Darker green for hover effect */
+  }
+  
