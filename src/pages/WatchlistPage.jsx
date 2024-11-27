@@ -1,20 +1,40 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation to get passed data
+import React, { useState, useEffect } from 'react';
 
 const Watchlist = () => {
-  const location = useLocation(); // Get stock data from the passed state
-  const { stock } = location.state || {}; // Destructure stock from state
+  const [watchlist, setWatchlist] = useState([]);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/watchlist');
+        const data = await response.json();
+        setWatchlist(data);
+      } catch (error) {
+        setMessage('Error fetching watchlist.');
+      }
+    };
+
+    fetchWatchlist();
+  }, []);
 
   return (
     <div className="watchlist-container">
-      <h2>Watchlist</h2>
-      {stock ? (
+      <h2>My Watchlist</h2>
+      {message && <div className="message">{message}</div>}
+      {watchlist.length > 0 ? (
         <div>
-          <p>Stock Name: {stock.name}</p>
-          <p>Price: ${stock.price}</p>
+          {watchlist.map((item) => (
+            <div key={item._id} className="watchlist-item">
+              <p>Stock: {item.stockName}</p>
+              <p>Price: ${item.price}</p>
+              <p>Quantity: {item.quantity}</p>
+              <p>Total Value: ${item.totalValue}</p>
+            </div>
+          ))}
         </div>
       ) : (
-        <p>No stock selected.</p>
+        <p>No stocks in your watchlist.</p>
       )}
     </div>
   );

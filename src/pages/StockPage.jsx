@@ -82,27 +82,73 @@ const StockPage = () => {
     setTotalPrice(total);
   };
 
-  const handleAddToWatchlist = () => {
+  const handleAddToWatchlist = async () => {
     if (Object.keys(selectedStocks).length === 0) {
       setMessage('No stock selected.');
-    } else {
-      const stockNames = Object.values(selectedStocks)
-        .map((s) => `${s.name} (${s.quantity})`)
-        .join(', ');
-      setMessage(`${stockNames} added to watchlist.`);
+      return;
+    }
+  
+    const stockNames = Object.values(selectedStocks)
+      .map((s) => ({
+        stockName: s.name,
+        price: s.price,
+        quantity: s.quantity,
+      }));
+  
+    try {
+      const response = await fetch('http://localhost:5000/api/watchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(stockNames),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        setMessage(`${data.length} stocks added to watchlist.`);
+      } else {
+        setMessage('Error adding stocks to watchlist.');
+      }
+    } catch (error) {
+      console.error('Error adding stocks to watchlist:', error);
+      setMessage('Error adding stocks to watchlist.');
     }
   };
+  
 
-  const handleBuyStock = () => {
+  const handleBuyStock = async () => {
     if (Object.keys(selectedStocks).length === 0) {
       setMessage('No stock selected.');
-    } else {
-      const stockNames = Object.values(selectedStocks)
-        .map((s) => `${s.name} (${s.quantity})`)
-        .join(', ');
-      setMessage(`Successfully bought ${stockNames}.`);
-      setSelectedStocks({});
-      setTotalPrice(0);
+      return;
+    }
+
+    const orderData = Object.values(selectedStocks).map(stock => ({
+      stockName: stock.name,
+      price: stock.price,
+      quantity: stock.quantity,
+      total: stock.price * stock.quantity,
+    }));
+
+    // Send the order to the backend for buying
+    try {
+      const response = await fetch('http://localhost:5000/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMessage(`Successfully bought ${data.length} stocks.`);
+        setSelectedStocks({}); // Clear selected stocks after purchase
+        setTotalPrice(0); // Reset the total price
+      } else {
+        setMessage('Error buying stocks.');
+      }
+    } catch (error) {
+      console.error('Error buying stocks:', error);
+      setMessage('Failed to save order.');
     }
   };
 
