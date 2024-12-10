@@ -7,6 +7,7 @@ const SignupPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    username:'',
     password: '',
     confirmPassword: '',
   });
@@ -29,6 +30,7 @@ const SignupPage = () => {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
+        username:formData.fullName+formData.email
       });
       navigate('/login'); // Redirect to login after successful signup
     } catch (err) {
