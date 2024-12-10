@@ -294,7 +294,6 @@ const StockPage = () => {
   const [message, setMessage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-<<<<<<< HEAD
   const [stocks, setStocks] = useState([]);
 
   useEffect(() => {
@@ -302,9 +301,6 @@ const StockPage = () => {
     setStocks(generateStocksWithPrices());
   }, []);
 
-=======
-  const {apiData} = useData();
->>>>>>> f4e42274cb2ed113f9fba02abc659655dcfe3db7
   const handleStockSelect = (stock, quantity) => {
     const updatedStocks = { ...selectedStocks };
 
@@ -420,11 +416,7 @@ const StockPage = () => {
         {filteredStocks.map((stock,index) => (
           <div key={stock.id} className="stock-item">
             <h3>{stock.name}</h3>
-<<<<<<< HEAD
             <p>Price: ₹{stock.price}</p>
-=======
-            <p>Price: ${apiData[index]?.high}</p>
->>>>>>> f4e42274cb2ed113f9fba02abc659655dcfe3db7
             <div className="quantity-selector">
               <label htmlFor={`quantity-${stock.id}`}>Quantity:</label>
               <input
