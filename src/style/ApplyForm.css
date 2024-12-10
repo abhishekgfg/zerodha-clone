@@ -1,0 +1,93 @@
+/* General section styling */
+.apply-form-section {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .apply-form-section h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styling */
+  .apply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .apply-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .apply-form input[type="text"],
+  .apply-form input[type="email"],
+  .apply-form input[type="file"],
+  .apply-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .apply-form input[type="text"]:focus,
+  .apply-form input[type="email"]:focus,
+  .apply-form input[type="file"]:focus,
+  .apply-form textarea:focus {
+    border-color: #0078d4;
+    outline: none;
+  }
+  
+  .apply-form textarea {
+    resize: vertical;
+    height: 100px;
+  }
+  
+  .apply-form .submit-btn {
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .apply-form .submit-btn:hover {
+    background-color: #005bb5;
+    transform: translateY(-2px);
+  }
+  
+  .apply-form .submit-btn:active {
+    transform: translateY(0);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .apply-form-section {
+      padding: 15px;
+    }
+  
+    .apply-form-section h1 {
+      font-size: 1.8rem;
+    }
+  
+    .apply-form {
+      gap: 10px;
+    }
+  }
+  
