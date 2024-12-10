@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '/src/style/StockPage.css';
+import { useData } from '../context/useData';
 
 // 50 Real Stock Names and Approximate Prices
 const stocksData = [
@@ -60,14 +61,14 @@ const StockPage = () => {
   const [message, setMessage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-
+  const {apiData} = useData();
   const handleStockSelect = (stock, quantity) => {
     const updatedStocks = { ...selectedStocks };
 
     if (quantity === 0) {
       delete updatedStocks[stock.id]; // Remove stock if quantity is 0
     } else {
-      updatedStocks[stock.id] = { ...stock, quantity };
+      updatedStocks[stock.id] = { ...stock, quantity,price:apiData[stock.id-1]?.high };
     }
 
     setSelectedStocks(updatedStocks);
@@ -176,10 +177,10 @@ const StockPage = () => {
       </div>
 
       <div className="stock-list">
-        {filteredStocks.map((stock) => (
+        {filteredStocks.map((stock,index) => (
           <div key={stock.id} className="stock-item">
             <h3>{stock.name}</h3>
-            <p>Price: ${stock.price}</p>
+            <p>Price: ${apiData[index]?.high}</p>
             <div className="quantity-selector">
               <label htmlFor={`quantity-${stock.id}`}>Quantity:</label>
               <input

@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming you're using React Router
 import '/src/style/HomePage.css';
+import axios from 'axios';
+import { useData } from '../context/useData';
 
 const HomePage = () => {
+  const {apiData,setApiData} = useData();
   const [email, setEmail] = useState('');
   const [emailSuccess, setEmailSuccess] = useState(false);
   const navigate = useNavigate();
@@ -33,7 +36,21 @@ const HomePage = () => {
   const handleNavigateToIPO = () => {
     navigate('/ipo'); // Replace with the actual route for the IPO page
   };
-
+  const fetchData = async ()=>{
+    try {
+      const response = await axios.get("http://api.marketstack.com/v1/eod?access_key=76be8a4e130ef487bd11dd679a7704e6&symbols=MSFT&limit=50");
+      if (response.status===200) {
+        console.log(response.data?.data);
+        setApiData(response.data?.data);
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+  useEffect(()=>{
+fetchData();    
+  },[])
   return (
     <div className="page-container">
       {/* Hero Section */}
@@ -51,15 +68,17 @@ const HomePage = () => {
         <div className="market-data">
           <div className="market-item">
             <h3>NIFTY 50</h3>
-            <p>18,234.65 <span className="market-up">+1.45%</span></p>
+            <p>{apiData[0]?.volume} <span className={`${(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"+":"-"}{(apiData[0]?.adj_high-apiData[0]?.adj_low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>SENSEX</h3>
-            <p>61,432.12 <span className="market-down">-0.87%</span></p>
+            {/* <p>{apiData[1]?.volume}<span className="market-down">-0.87%</span></p> */}
+             <p>{apiData[1]?.volume} <span className={`${(apiData[1]?.adj_high-apiData[1]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[1]?.adj_high-apiData[1]?.adj_low)>2?"+":"-"}{(apiData[1]?.adj_high-apiData[1]?.adj_low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>Bank Nifty</h3>
-            <p>39,123.89 <span className="market-up">+0.92%</span></p>
+            {/* <p>{apiData[2]?.volume} <span className="market-up">+0.92%</span></p> */}
+             <p>{apiData[2]?.volume} <span className={`${(apiData[2]?.adj_high-apiData[2]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[2]?.adj_high-apiData[2]?.adj_low)>2?"+":"-"}{(apiData[2]?.adj_high-apiData[2]?.adj_low).toFixed(2)}%</span></p>
           </div>
         </div>
       </section>
