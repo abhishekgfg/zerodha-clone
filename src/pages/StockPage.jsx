@@ -220,6 +220,7 @@
 
 import React, { useState, useEffect } from 'react';
 import '/src/style/StockPage.css';
+import { useData } from '../context/useData';
 
 // Function to generate random prices for stocks
 const generateRandomPrice = (min, max) => {
@@ -293,6 +294,7 @@ const StockPage = () => {
   const [message, setMessage] = useState('');
   const [totalPrice, setTotalPrice] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
+<<<<<<< HEAD
   const [stocks, setStocks] = useState([]);
 
   useEffect(() => {
@@ -300,13 +302,16 @@ const StockPage = () => {
     setStocks(generateStocksWithPrices());
   }, []);
 
+=======
+  const {apiData} = useData();
+>>>>>>> f4e42274cb2ed113f9fba02abc659655dcfe3db7
   const handleStockSelect = (stock, quantity) => {
     const updatedStocks = { ...selectedStocks };
 
     if (quantity === 0) {
       delete updatedStocks[stock.id]; // Remove stock if quantity is 0
     } else {
-      updatedStocks[stock.id] = { ...stock, quantity };
+      updatedStocks[stock.id] = { ...stock, quantity,price:apiData[stock.id-1]?.high };
     }
 
     setSelectedStocks(updatedStocks);
@@ -412,10 +417,14 @@ const StockPage = () => {
       </div>
 
       <div className="stock-list">
-        {filteredStocks.map((stock) => (
+        {filteredStocks.map((stock,index) => (
           <div key={stock.id} className="stock-item">
             <h3>{stock.name}</h3>
+<<<<<<< HEAD
             <p>Price: ₹{stock.price}</p>
+=======
+            <p>Price: ${apiData[index]?.high}</p>
+>>>>>>> f4e42274cb2ed113f9fba02abc659655dcfe3db7
             <div className="quantity-selector">
               <label htmlFor={`quantity-${stock.id}`}>Quantity:</label>
               <input
