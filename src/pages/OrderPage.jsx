@@ -48,7 +48,6 @@
 
 import React, { useEffect, useState } from 'react';
 import '/src/style/OrderPage.css';
-import { color } from 'chart.js/helpers';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -60,7 +59,7 @@ const OrderPage = () => {
   const [totalPriceInINR, setTotalPriceInINR] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // State to store error message
+  const [errorMessage, setErrorMessage] = useState('');
 
   const USD_TO_INR = 82; // Conversion rate
 
@@ -82,7 +81,7 @@ const OrderPage = () => {
   }, []);
 
   const calculateTotal = (orders) => {
-    const total = orders.reduce((sum, order) => sum + order.total, 0);
+    const total = orders.reduce((sum, order) => sum + order.price * order.quantity, 0);
     const totalQuantity = orders.reduce((sum, order) => sum + order.quantity, 0);
     setTotalPriceInINR(total * USD_TO_INR);
     setTotalItems(totalQuantity);
@@ -133,49 +132,41 @@ const OrderPage = () => {
   };
 
   const handleSellOrders = async () => {
-    // Reset the error message before each sell operation
     setErrorMessage('');
 
-    // Validate quantity for each selected order
     const invalidOrders = selectedOrders.filter((orderId) => {
       const order = orders.find((order) => order._id === orderId);
       const quantityToSellValue = quantityToSell[orderId] || 0;
-      return quantityToSellValue > order.quantity; // Check if quantity is more than available stock
+      return quantityToSellValue > order.quantity;
     });
 
     if (invalidOrders.length > 0) {
       setErrorMessage('Error: Quantity exceeds available stock.');
-      return; // Exit if there's an invalid quantity
+      return;
     }
 
     try {
-      const updatedOrders = orders.filter((order) => {
+      const updatedOrders = orders.map((order) => {
         if (selectedOrders.includes(order._id)) {
           const quantityToSellValue = quantityToSell[order._id] || 0;
 
           if (quantityToSellValue > 0 && quantityToSellValue <= order.quantity) {
-            // Update the order's quantity and total
             order.quantity -= quantityToSellValue;
             order.total = order.quantity * order.price;
-
-            // If the quantity is 0 or less, remove the order from the list
-            return order.quantity > 0;
           }
         }
-        return true; // Keep non-selected orders
-      });
+        return order;
+      }).filter((order) => order.quantity > 0);
 
-      // After selling, update the orders and reset the UI states
       setOrders(updatedOrders);
-      setSelectedOrders([]); // Clear selected orders
-      setIsSelling(false); // Disable the selling mode
-      setShowCheckboxes(false); // Hide checkboxes
-      calculateTotal(updatedOrders); // Recalculate totals
+      setSelectedOrders([]);
+      setIsSelling(false);
+      setShowCheckboxes(false);
+      calculateTotal(updatedOrders);
 
       setSuccessMessage('Sell operation successful!');
-
       setTimeout(() => {
-        setSuccessMessage(''); // Hide success message after 3 seconds
+        setSuccessMessage('');
       }, 3000);
     } catch (error) {
       console.error('Error selling orders:', error);
@@ -232,7 +223,7 @@ const OrderPage = () => {
             <p className="success-message">{successMessage}</p>
           )}
           {errorMessage && (
-            <p className="error-message">{errorMessage}</p> // Display error message here
+            <p className="error-message">{errorMessage}</p>
           )}
           {orders.length === 0 ? (
             <p className="no-orders-message">No orders found.</p>
@@ -251,20 +242,13 @@ const OrderPage = () => {
                   <div className="order-details">
                     <h3 className="order-stock-name">{order.stockName}</h3>
                     <p>
-                      Price:{' '}
-                      <span className="order-price">
-                        ₹{(order.price * USD_TO_INR).toFixed(2)}
-                      </span>
+                      Price: <span className="order-price">₹{(order.price * USD_TO_INR).toFixed(2)}</span>
                     </p>
                     <p>
-                      Quantity:{' '}
-                      <span className="order-quantity">{order.quantity}</span>
+                      Quantity: <span className="order-quantity">{order.quantity}</span>
                     </p>
                     <p>
-                      Total:{' '}
-                      <span className="order-total">
-                        ₹{(order.total * USD_TO_INR).toFixed(2)}
-                      </span>
+                      Total: <span className="order-total">₹{(order.total * USD_TO_INR).toFixed(2)}</span>
                     </p>
                     {isSelling && selectedOrders.includes(order._id) && (
                       <div className="quantity-selector">
@@ -274,7 +258,7 @@ const OrderPage = () => {
                           id={`quantity-${order._id}`}
                           value={quantityToSell[order._id] || ''}
                           onChange={(e) =>
-                            handleQuantityChange(order._id, e.target.value)
+                            handleQuantityChange(order._id, parseInt(e.target.value, 10))
                           }
                           max={order.quantity}
                           min={1}

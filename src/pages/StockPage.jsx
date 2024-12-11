@@ -218,6 +218,7 @@
 // export default StockPage;
 
 
+// 
 import React, { useState, useEffect } from 'react';
 import '/src/style/StockPage.css';
 import { useData } from '../context/useData';
@@ -227,66 +228,24 @@ const generateRandomPrice = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// 50 Real Stock Names
+// Stock data
 const stocksData = [
-  'Apple',
-  'Google',
-  'Microsoft',
-  'Amazon',
-  'Tesla',
-  'Facebook',
-  'Netflix',
-  'Nvidia',
-  'Intel',
-  'AMD',
-  'Salesforce',
-  'Adobe',
-  'PayPal',
-  'Square',
-  'Uber',
-  'Lyft',
-  'Spotify',
-  'Shopify',
-  'Zoom',
-  'Twitter',
-  'Coca-Cola',
-  'PepsiCo',
-  'Procter & Gamble',
-  'Johnson & Johnson',
-  'Pfizer',
-  'Moderna',
-  'Boeing',
-  'Airbnb',
-  'Alibaba',
-  'Baidu',
-  'Tencent',
-  'JD.com',
-  'Sony',
-  'Samsung',
-  'Toyota',
-  'Honda',
-  'Nissan',
-  'Ford',
-  'General Motors',
-  'ExxonMobil',
-  'Chevron',
-  'Shell',
-  'BP',
-  'Walmart',
-  'Target',
-  'Costco',
-  'Starbucks',
-  'McDonald\'s',
-  'Visa',
-  'Mastercard',
+  'Apple', 'Google', 'Microsoft', 'Amazon', 'Tesla', 'Facebook', 'Netflix',
+  'Nvidia', 'Intel', 'AMD', 'Salesforce', 'Adobe', 'PayPal', 'Square', 'Uber',
+  'Lyft', 'Spotify', 'Shopify', 'Zoom', 'Twitter', 'Coca-Cola', 'PepsiCo',
+  'Procter & Gamble', 'Johnson & Johnson', 'Pfizer', 'Moderna', 'Boeing',
+  'Airbnb', 'Alibaba', 'Baidu', 'Tencent', 'JD.com', 'Sony', 'Samsung',
+  'Toyota', 'Honda', 'Nissan', 'Ford', 'General Motors', 'ExxonMobil',
+  'Chevron', 'Shell', 'BP', 'Walmart', 'Target', 'Costco', 'Starbucks',
+  'McDonald\'s', 'Visa', 'Mastercard',
 ];
 
-// Convert stocksData to include random prices in INR
+// Generate stock data with random prices
 const generateStocksWithPrices = () =>
   stocksData.map((name, index) => ({
     id: index + 1,
     name,
-    price: generateRandomPrice(100, 10000), // Random price between 100 and 10,000 INR
+    price: generateRandomPrice(100, 10000),
   }));
 
 const StockPage = () => {
@@ -295,19 +254,24 @@ const StockPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [stocks, setStocks] = useState([]);
+  const { apiData } = useData(); // Simulating useData context hook
 
   useEffect(() => {
-    // Initialize stocks with random prices
     setStocks(generateStocksWithPrices());
   }, []);
 
   const handleStockSelect = (stock, quantity) => {
+    if (quantity < 0) {
+      return; // Do not allow negative quantities
+    }
+
     const updatedStocks = { ...selectedStocks };
 
     if (quantity === 0) {
       delete updatedStocks[stock.id]; // Remove stock if quantity is 0
     } else {
-      updatedStocks[stock.id] = { ...stock, quantity,price:apiData[stock.id-1]?.high };
+      const updatedPrice = apiData?.[stock.id - 1]?.high || stock.price;
+      updatedStocks[stock.id] = { ...stock, quantity, price: updatedPrice };
     }
 
     setSelectedStocks(updatedStocks);
@@ -378,8 +342,8 @@ const StockPage = () => {
       if (response.ok) {
         const data = await response.json();
         setMessage(`Successfully bought ${data.length} stocks.`);
-        setSelectedStocks({}); // Clear selected stocks after purchase
-        setTotalPrice(0); // Reset the total price
+        setSelectedStocks({});
+        setTotalPrice(0);
       } else {
         setMessage('Error buying stocks.');
       }
@@ -407,16 +371,13 @@ const StockPage = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-bar"
         />
-        <button className="search-button">
-          <i className="fa fa-search"></i>
-        </button>
       </div>
 
       <div className="stock-list">
-        {filteredStocks.map((stock,index) => (
+        {filteredStocks.map((stock) => (
           <div key={stock.id} className="stock-item">
             <h3>{stock.name}</h3>
-            <p>Price: ₹{stock.price}</p>
+            <p>Price: ₹{apiData?.[stock.id - 1]?.high || stock.price}</p>
             <div className="quantity-selector">
               <label htmlFor={`quantity-${stock.id}`}>Quantity:</label>
               <input
