@@ -37,11 +37,12 @@ const HomePage = () => {
     navigate('/ipo'); // Replace with the actual route for the IPO page
   };
   const fetchData = async ()=>{
+    
     try {
       const response = await axios.get("https://polygon.io/dashboard/keys/9ba138dc-6f79-4f13-93c8-86266e30c75f?values=oxMSZoKSHw2pAebz9vtw_fGI0vi3psPG");
       if (response.status===200) {
-        console.log(response.data?.data);
-        setApiData(response.data?.data);
+        console.log(response.data);
+        setApiData(response.data?.AAPL?.values);
       }
     } catch (error) {
       console.log(error);
@@ -68,17 +69,17 @@ fetchData();
         <div className="market-data">
           <div className="market-item">
             <h3>NIFTY 50</h3>
-            <p>{apiData[0]?.volume} <span className={`${(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"+":"-"}{(apiData[0]?.adj_high-apiData[0]?.adj_low).toFixed(2)}%</span></p>
+            <p>{apiData[0]?.volume} <span className={`${(apiData[0]?.high-apiData[0]?.low)>0?"market-up":"market-down"}`}>{(apiData[0]?.high-apiData[0]?.low)>0?"+":"-"}{(apiData[0]?.high-apiData[0]?.low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>SENSEX</h3>
             {/* <p>{apiData[1]?.volume}<span className="market-down">-0.87%</span></p> */}
-             <p>{apiData[1]?.volume} <span className={`${(apiData[1]?.adj_high-apiData[1]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[1]?.adj_high-apiData[1]?.adj_low)>2?"+":"-"}{(apiData[1]?.adj_high-apiData[1]?.adj_low).toFixed(2)}%</span></p>
+             <p>{apiData[1]?.volume} <span className={`${(apiData[1]?.high-apiData[1]?.low)>0?"market-up":"market-down"}`}>{(apiData[1]?.high-apiData[1]?.low)>2?"+":"-"}{(apiData[1]?.high-apiData[1]?.low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>Bank Nifty</h3>
             {/* <p>{apiData[2]?.volume} <span className="market-up">+0.92%</span></p> */}
-             <p>{apiData[2]?.volume} <span className={`${(apiData[2]?.adj_high-apiData[2]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[2]?.adj_high-apiData[2]?.adj_low)>2?"+":"-"}{(apiData[2]?.adj_high-apiData[2]?.adj_low).toFixed(2)}%</span></p>
+             <p>{apiData[2]?.volume} <span className={`${(apiData[2]?.high-apiData[2]?.low)>0?"market-up":"market-down"}`}>{(apiData[2]?.high-apiData[2]?.low)>2?"+":"-"}{(apiData[2]?.high-apiData[2]?.low).toFixed(2)}%</span></p>
           </div>
         </div>
       </section>

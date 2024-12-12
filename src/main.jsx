@@ -4,9 +4,9 @@ import App from "./App";
 import { DataContextProvider } from "./context/useData";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  
     <DataContextProvider>
       <App />
     </DataContextProvider>
-  </React.StrictMode>
+ 
 );
