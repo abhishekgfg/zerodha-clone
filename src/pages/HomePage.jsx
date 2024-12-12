@@ -38,10 +38,10 @@ const HomePage = () => {
   };
   const fetchData = async ()=>{
     try {
-      const response = await axios.get("http://api.marketstack.com/v1/eod?access_key=76be8a4e130ef487bd11dd679a7704e6&symbols=MSFT&limit=50");
+      const response = await axios.get("https://api.twelvedata.com/time_series?symbol=AAPL,EUR/USD,ETH/BTC:Huobi,TRP:TSX&interval=1min&apikey=53022a12d5f047c0bb72b7bb07d2ecc1");
       if (response.status===200) {
-        console.log(response.data?.data);
-        setApiData(response.data?.data);
+        console.log(response.data);
+        setApiData(response.data?.AAPL?.values);
       }
     } catch (error) {
       console.log(error);
@@ -68,17 +68,17 @@ fetchData();
         <div className="market-data">
           <div className="market-item">
             <h3>NIFTY 50</h3>
-            <p>{apiData[0]?.volume} <span className={`${(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[0]?.adj_high-apiData[0]?.adj_low)>0?"+":"-"}{(apiData[0]?.adj_high-apiData[0]?.adj_low).toFixed(2)}%</span></p>
+            <p>{apiData[0]?.volume} <span className={`${(apiData[0]?.high-apiData[0]?.low)>0?"market-up":"market-down"}`}>{(apiData[0]?.high-apiData[0]?.low)>0?"+":"-"}{(apiData[0]?.high-apiData[0]?.low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>SENSEX</h3>
             {/* <p>{apiData[1]?.volume}<span className="market-down">-0.87%</span></p> */}
-             <p>{apiData[1]?.volume} <span className={`${(apiData[1]?.adj_high-apiData[1]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[1]?.adj_high-apiData[1]?.adj_low)>2?"+":"-"}{(apiData[1]?.adj_high-apiData[1]?.adj_low).toFixed(2)}%</span></p>
+             <p>{apiData[1]?.volume} <span className={`${(apiData[1]?.high-apiData[1]?.low)>0?"market-up":"market-down"}`}>{(apiData[1]?.high-apiData[1]?.low)>2?"+":"-"}{(apiData[1]?.high-apiData[1]?.low).toFixed(2)}%</span></p>
           </div>
           <div className="market-item">
             <h3>Bank Nifty</h3>
             {/* <p>{apiData[2]?.volume} <span className="market-up">+0.92%</span></p> */}
-             <p>{apiData[2]?.volume} <span className={`${(apiData[2]?.adj_high-apiData[2]?.adj_low)>0?"market-up":"market-down"}`}>{(apiData[2]?.adj_high-apiData[2]?.adj_low)>2?"+":"-"}{(apiData[2]?.adj_high-apiData[2]?.adj_low).toFixed(2)}%</span></p>
+             <p>{apiData[2]?.volume} <span className={`${(apiData[2]?.high-apiData[2]?.low)>0?"market-up":"market-down"}`}>{(apiData[2]?.high-apiData[2]?.low)>2?"+":"-"}{(apiData[2]?.high-apiData[2]?.low).toFixed(2)}%</span></p>
           </div>
         </div>
       </section>
