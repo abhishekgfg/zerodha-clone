@@ -38,7 +38,7 @@ const HomePage = () => {
   };
   const fetchData = async ()=>{
     try {
-      const response = await axios.get("http://api.marketstack.com/v1/eod?access_key=76be8a4e130ef487bd11dd679a7704e6&symbols=MSFT&limit=50");
+      const response = await axios.get("https://polygon.io/dashboard/keys/9ba138dc-6f79-4f13-93c8-86266e30c75f?values=oxMSZoKSHw2pAebz9vtw_fGI0vi3psPG");
       if (response.status===200) {
         console.log(response.data?.data);
         setApiData(response.data?.data);
