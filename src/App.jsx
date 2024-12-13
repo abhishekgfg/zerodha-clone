@@ -19,6 +19,7 @@ import MutualFunds from '/src/pages/MutualFunds';
 import IPOPage from '/src/pages/IPOPage';
 import AboutMutualFunds from '/src/pages/AboutMutualFunds';
 import ApplyForm from '/src/FooterPage/ApplyForm.jsx';
+import SellPage from '/src/Pages/SellPage';
 
 
 import '/src/style/App.css';
@@ -84,6 +85,7 @@ const App = () => {
         <Route path="/ipo" element={<IPOPage />} />
         <Route path="/mutual-funds" element={<MutualFunds />} />
         <Route path="/about-mutual-funds" element={<AboutMutualFunds />} />
+        <Route path="/sell" element={<SellPage />} />
         <Route path="/apply" element={<ApplyForm />} />
       </Routes>
       <Footer ref={footerRef} />
