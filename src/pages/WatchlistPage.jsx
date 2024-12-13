@@ -1,50 +1,6 @@
-// import React, { useState, useEffect } from 'react';
-
-// const Watchlist = () => {
-//   const [watchlist, setWatchlist] = useState([]);
-//   const [message, setMessage] = useState('');
-
-//   useEffect(() => {
-//     const fetchWatchlist = async () => {
-//       try {
-//         const response = await fetch('http://localhost:5000/api/watchlist');
-//         const data = await response.json();
-//         setWatchlist(data);
-//       } catch (error) {
-//         setMessage('Error fetching watchlist.');
-//       }
-//     };
-
-//     fetchWatchlist();
-//   }, []);
-
-//   return (
-//     <div className="watchlist-container">
-//       <h2>My Watchlist</h2>
-//       {message && <div className="message">{message}</div>}
-//       {watchlist.length > 0 ? (
-//         <div>
-//           {watchlist.map((item) => (
-//             <div key={item._id} className="watchlist-item">
-//               <p>Stock: {item.stockName}</p>
-//               <p>Price: ${item.price}</p>
-//               <p>Quantity: {item.quantity}</p>
-//               <p>Total Value: ${item.totalValue}</p>
-//             </div>
-//           ))}
-//         </div>
-//       ) : (
-//         <p>No stocks in your watchlist.</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Watchlist;
-
-
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import '/src/style/WatchlistPage.css'; // Add CSS file for styling
 
 const Watchlist = () => {
@@ -53,6 +9,11 @@ const Watchlist = () => {
   const [selectedStocks, setSelectedStocks] = useState([]);
   const [showCheckboxes, setShowCheckboxes] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [newPrice, setNewPrice] = useState('');
+  const [totalValue, setTotalValue] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const fetchWatchlist = async () => {
@@ -60,6 +21,7 @@ const Watchlist = () => {
         const response = await fetch('http://localhost:5000/api/watchlist');
         const data = await response.json();
         setWatchlist(data);
+        calculateTotal(data); // Calculate total stock value and items
       } catch (error) {
         setMessage('Error fetching watchlist.');
       }
@@ -67,6 +29,13 @@ const Watchlist = () => {
 
     fetchWatchlist();
   }, []);
+
+  const calculateTotal = (stocks) => {
+    const total = stocks.reduce((sum, stock) => sum + stock.price * stock.quantity, 0);
+    const totalQuantity = stocks.reduce((sum, stock) => sum + stock.quantity, 0);
+    setTotalValue(total);
+    setTotalItems(totalQuantity);
+  };
 
   const handleCheckboxChange = (id) => {
     setSelectedStocks((prev) =>
@@ -85,6 +54,7 @@ const Watchlist = () => {
         setWatchlist((prev) => prev.filter((item) => !selectedStocks.includes(item._id)));
         setSelectedStocks([]);
         setMessage('Selected stocks removed successfully.');
+        calculateTotal(watchlist);
       } else {
         setMessage('Failed to remove selected stocks.');
       }
@@ -101,39 +71,34 @@ const Watchlist = () => {
     }
   };
 
-  const convertToRupees = (priceInDollars) => {
-    const exchangeRate = 82; // Example exchange rate (1 USD = 82 INR)
-    return (priceInDollars * exchangeRate).toFixed(2);
-  };
 
   return (
     <div className="watchlist-container">
-      <div className="header">
-        <div className="menu-dots" onClick={() => setShowMenu(!showMenu)}>
-          <span>.</span>
-          <span>.</span>
-          <span>.</span>
-        </div>
-        <h2>My Watchlist</h2>
-        {selectedStocks.length > 0 && (
-          <button className="remove-selected-btn" onClick={handleRemoveSelected}>
-            Remove Selected
-          </button>
+      <h2 className="watchlist-title">My Watchlist</h2>
+
+      <div className="header-menu">
+        <button className="sell-page-button" onClick={() => navigate('/sell')}>
+          Sell Page
+        </button>
+        <button className="three-dot-button" onClick={() => setShowMenu(!showMenu)}>
+          &#x22EE;
+        </button>
+        {showMenu && (
+          <div className="dropdown-menu">
+            <button onClick={() => setShowCheckboxes((prev) => !prev)}>
+              {showCheckboxes ? 'Hide Checkboxes' : 'Select for Remove'}
+            </button>
+            <button onClick={handleSelectAll}>
+              {selectedStocks.length === watchlist.length ? 'Deselect All' : 'Select All'}
+            </button>
+          </div>
         )}
       </div>
 
-      {showMenu && (
-        <div className="dropdown-menu">
-          <button className="small-button" onClick={() => setShowCheckboxes(true)}>
-            Select for Remove
-          </button>
-          <button className="small-button" onClick={handleSelectAll}>
-            {selectedStocks.length === watchlist.length ? 'Deselect All' : 'Select All'}
-          </button>
-        </div>
-      )}
-
       {message && <div className="message">{message}</div>}
+
+      <p className="total-summary">Total Stocks: {totalItems}</p>
+      <p className="total-value">Total Value: ₹{totalValue.toFixed(2)}</p>
 
       {watchlist.length > 0 ? (
         <div className="watchlist-items">
@@ -148,10 +113,17 @@ const Watchlist = () => {
                 />
               )}
               <div className="stock-details">
-                <p><strong>Stock:</strong> {item.stockName}</p>
-                <p><strong>Price:</strong> ₹{convertToRupees(item.price)}</p>
-                <p><strong>Quantity:</strong> {item.quantity}</p>
-                <p><strong>Total Value:</strong> ₹{convertToRupees(item.totalValue)}</p>
+                <h3>{item.stockName}</h3>
+                <p>
+                  Price: <span>₹{item.price}</span>
+                </p>
+                <p>
+                  Quantity: <span>{item.quantity}</span>
+                </p>
+                <p>
+                  Total: <span>₹{(item.price * item.quantity).toFixed(2)}</span>
+                </p>
+               
               </div>
             </div>
           ))}
@@ -159,8 +131,15 @@ const Watchlist = () => {
       ) : (
         <p className="no-stocks">No stocks in your watchlist.</p>
       )}
+
+      {selectedStocks.length > 0 && (
+        <button className="remove-selected-btn" onClick={handleRemoveSelected}>
+          Remove Selected
+        </button>
+      )}
     </div>
   );
 };
 
 export default Watchlist;
+

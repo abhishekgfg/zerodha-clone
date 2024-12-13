@@ -321,37 +321,38 @@ const StockPage = () => {
 
   const handleBuyStock = async () => {
     if (Object.keys(selectedStocks).length === 0) {
-      setMessage('No stock selected.');
-      return;
+        setMessage('No stock selected.');
+        return;
     }
 
     const orderData = Object.values(selectedStocks).map((stock) => ({
-      stockName: stock.name,
-      price: stock.price,
-      quantity: stock.quantity,
-      total: stock.price * stock.quantity,
+        stockName: stock.name,
+        price: stock.price,  // Ensure the current price is being sent
+        quantity: stock.quantity,
+        total: stock.price * stock.quantity,
     }));
 
     try {
-      const response = await fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
+        const response = await fetch('http://localhost:5000/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage(`Successfully bought ${data.length} stocks.`);
-        setSelectedStocks({});
-        setTotalPrice(0);
-      } else {
-        setMessage('Error buying stocks.');
-      }
+        if (response.ok) {
+            const data = await response.json();
+            setMessage(`Successfully bought ${data.length} stocks.`);
+            setSelectedStocks({});
+            setTotalPrice(0);
+        } else {
+            setMessage('Error buying stocks.');
+        }
     } catch (error) {
-      console.error('Error buying stocks:', error);
-      setMessage('Failed to save order.');
+        console.error('Error buying stocks:', error);
+        setMessage('Failed to save order.');
     }
-  };
+};
+
 
   const filteredStocks = stocks.filter((stock) =>
     stock.name.toLowerCase().includes(searchTerm.toLowerCase())
